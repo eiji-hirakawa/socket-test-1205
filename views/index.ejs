@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="javascripts/jquery-3.2.1.min.js"></script>
+    <script src="socket.io/socket.io.js"></script>
+    <script>
+        $(function(){
+            var port = 31000; // 10443
+            // var socket = io.connect("http://" + window.location.hostname + ":" +port);
+            var socket = io.connect("ws://" + window.location.hostname + ":" + port);
+            // var socket = io.connect("http://" + window.location.hostname,{secure: true, port:port});
+            socket.on("a2c", function(data) {
+                $("#msg").text(data);
+            });
+            $("#btn").on("click", function(ev) {
+                socket.emit("c2a", "client 2 server" );
+            });
+        });
+    </script>
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">submit</button>
+    <p id="msg"></p>
+</body>
+</html>
